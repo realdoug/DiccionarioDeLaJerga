@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  definition: MyText
+  example: MyText
+  sudonym: MyString
+  email: MyString
+
+two:
+  definition: MyText
+  example: MyText
+  sudonym: MyString
+  email: MyString

@@ -1,0 +1,36 @@
+<%= form_for(@word) do |f| %>
+  <% if @word.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@word.errors.count, "error") %> prohibited this word from being saved:</h2>
+
+      <ul>
+      <% @word.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :palabra %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :definicion %><br>
+    <%= f.text_area :definition %>
+  </div>
+  <div class="field">
+    <%= f.label :ejemplo %><br>
+    <%= f.text_area :example %>
+  </div>
+  <div class="field">
+    <%= f.label :seudonino %><br>
+    <%= f.text_field :pseudonym %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Crear nueva palabra" %>
+  </div>
+<% end %>
