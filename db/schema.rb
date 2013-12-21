@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219214711) do
+ActiveRecord::Schema.define(version: 20131221004230) do
+
+  create_table "votes", force: true do |t|
+    t.string   "voter_id"
+    t.integer  "word_id"
+    t.boolean  "upvote",     default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "words", force: true do |t|
     t.text     "definition"

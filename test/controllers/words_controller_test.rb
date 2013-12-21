@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WordsControllerTest < ActionController::TestCase
   setup do
-    @word = words(:one)
+    @word = FactoryGirl.create :word
   end
 
   test "should get index" do
@@ -45,5 +45,19 @@ class WordsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to words_path
+  end
+
+  test "should add a vote to word" do
+    assert_difference('@word.up_votes.count') do
+      post :upvote, word_id: @word
+    end
+  end
+
+  test "with a previous downvote, it should make it an upvote" do
+    get :downvote, word_id: @word.id
+
+    assert_difference('@word.down_votes.count', -1) do
+      post :upvote, word_id: @word.id
+    end
   end
 end

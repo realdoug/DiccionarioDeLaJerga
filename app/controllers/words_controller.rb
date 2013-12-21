@@ -1,5 +1,5 @@
 class WordsController < ApplicationController
-  before_action :set_word, only: [:edit, :update, :destroy]
+  before_action :set_word, only: [:edit, :update, :destroy, :upvote, :downvote]
 
   # GET /words
   # GET /words.json
@@ -62,10 +62,38 @@ class WordsController < ApplicationController
     end
   end
 
+  def upvote
+    if @vote = @word.down_votes.voter(session[:voter_id]).first
+      @vote.upvote = true
+    else
+      @vote = @word.up_vote session[:voter_id]
+    end
+
+    if @vote.save
+      render nothing: true
+    else
+      render nothing: true
+    end
+  end
+
+  def downvote
+    if @vote = @word.up_votes.voter(session[:voter_id]).first
+      @vote.upvote = false
+    else
+      @vote = @word.down_vote session[:voter_id]
+    end
+    if @vote.save
+      render nothing: true
+    else
+      render nothing: true
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_word
-      @word = Word.find(params[:id])
+      key = params[:id] || params[:word_id]
+      @word = Word.find key
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
