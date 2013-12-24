@@ -1,13 +1,4 @@
 <p id="notice"><%= notice %></p>
 <% @words.each_with_index do |word, index| %>
   <h2><%= "#{index+1}) #{word.name}" %></h2>
-  <div class="definition">
-    <%= word.definition %>
-  </div>
-  <div class="example">
-    <em><%= word.example %></em>
-  </div>
-  <div class="author">
-    por <strong><%= word.pseudonym %></strong> <%= word.created_at.strftime("%d/%m/%Y") %>
-  </div>
 <% end %>

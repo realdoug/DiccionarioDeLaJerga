@@ -4,10 +4,6 @@
   <thead>
     <tr>
       <th>Palabra</th>
-      <th>Definicion</th>
-      <th>Ejemplo</th>
-      <th>Creado por</th>
-      <th>Fecha de creacion</th>
     </tr>
   </thead>
 
@@ -15,10 +11,6 @@
     <% @words.each do |word| %>
       <tr>
         <td><%= link_to word.name, word_path(word.name) %></td>
-        <td><%= word.definition %></td>
-        <td><%= word.example %></td>
-        <td><%= word.pseudonym %></td>
-        <td><%= word.created_at %></td>
       </tr>
     <% end %>
   </tbody>
