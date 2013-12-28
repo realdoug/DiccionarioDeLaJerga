@@ -1,4 +1,6 @@
 DiccionarioJerga::Application.routes.draw do
+  resources :creators
+
   root to: 'words#index'
   resources :words do
     post 'upvote'
