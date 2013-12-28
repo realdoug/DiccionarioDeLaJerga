@@ -10,25 +10,38 @@ class WordsController < ApplicationController
   # GET /words/1
   # GET /words/1.json
   def show
-    @words = Word.where name: params[:id]
+    @words = Word.where("name like ?", params[:id])
+
   end
 
   # GET /words/new
   def new
     @word = Word.new
-  end
-
-  # GET /words/1/edit
-  def edit
+    @creator = Creator.new
   end
 
   # POST /words
   # POST /words.json
   def create
+    Rails.logger.debug "DEBUG: params are #{params}"
+    Rails.logger.debug "DEBUG: creator params are #{params[:creator]}"
+    Rails.logger.debug "DEBUG: word_params are #{word_params}"
+
+    @creator = Creator.find_or_create_by_pseudonym(params[:creator][:pseudonym])
+
+
     @word = Word.new(word_params)
+    @word.creator = @creator
+
+    if @creator.email != params[:creator][:email]
+       #don't allow saving and add error message so the user knows that the pseudonym already exists
+    end
 
     respond_to do |format|
       if @word.save
+        
+        #send confirmation email to make the word active
+
         format.html { redirect_to @word, notice: 'Word was successfully created.' }
         format.json { render action: 'show', status: :created, location: @word }
       else
@@ -36,31 +49,10 @@ class WordsController < ApplicationController
         format.json { render json: @word.errors, status: :unprocessable_entity }
       end
     end
+
+    
   end
 
-  # PATCH/PUT /words/1
-  # PATCH/PUT /words/1.json
-  def update
-    respond_to do |format|
-      if @word.update(word_params)
-        format.html { redirect_to @word, notice: 'Word was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @word.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /words/1
-  # DELETE /words/1.json
-  def destroy
-    @word.destroy
-    respond_to do |format|
-      format.html { redirect_to words_url }
-      format.json { head :no_content }
-    end
-  end
 
   def upvote
     if @vote = @word.down_votes.voter(session[:voter_id]).first
@@ -98,6 +90,6 @@ class WordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def word_params
-      params[:word].permit(:name, :definition, :pseudonym, :email, :example)
+      params[:word].permit(:name, :definition, :example, :creator => [:pseudonym, :creator])
     end
 end

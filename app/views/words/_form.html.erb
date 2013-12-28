@@ -10,6 +10,19 @@
       </ul>
     </div>
   <% end %>
+  
+  <% if @creator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@creator.errors.count, "error") %> prohibited this word from being saved:</h2>
+
+      <ul>
+      <% @creator.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :palabra %><br>
     <%= f.text_field :name %>
@@ -22,14 +35,19 @@
     <%= f.label :ejemplo %><br>
     <%= f.text_area :example %>
   </div>
+
+  <%= fields_for :creator do |builder| %>
   <div class="field">
-    <%= f.label :seudonino %><br>
-    <%= f.text_field :pseudonym %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
+    <%= builder.label :seudonino %><br>
+    <%= builder.text_field :pseudonym %>
+    </div>
+
+    <div class="field">
+      <%= builder.label :email %><br>
+      <%= builder.text_field :email %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit "Crear nueva palabra" %>
   </div>

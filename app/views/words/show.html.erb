@@ -11,9 +11,11 @@
   </div>
 
   <div class="author">
-    por <strong><%= word.pseudonym %></strong> <%= word.created_at.strftime("%d/%m/%Y") %>
+    por <strong><%= word.creator.pseudonym %></strong> <%= word.created_at.strftime("%d/%m/%Y") %>
   </div>
 
   <div class="vote">
+    <%= link_to "upvote", word_upvote_path(word.id), method: :post, remote: true %> (<%= word.votes.up.count %>)|
+    <%= link_to "downvote", word_downvote_path(word.id), method: :post, remote: true %>(<%= word.votes.down.count %>)
   </div>
 <% end %>

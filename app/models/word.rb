@@ -1,5 +1,14 @@
 class Word < ActiveRecord::Base
   has_many :votes
+  belongs_to :creator
+
+  validates :name, :definition, :example, :creator_id, :presence => true
+
+  accepts_nested_attributes_for :creator
+
+  def to_param
+    name.parameterize
+  end
 
   def up_votes
     votes.up

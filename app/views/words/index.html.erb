@@ -14,10 +14,10 @@
   <tbody>
     <% @words.each do |word| %>
       <tr>
-        <td><%= link_to word.name, word_path(word.name) %></td>
+        <td><%= link_to word.name, word_path(word) %></td>
         <td><%= word.definition %></td>
         <td><%= word.example %></td>
-        <td><%= word.pseudonym %></td>
+        <td><%= word.creator.pseudonym %></td>
         <td><%= word.created_at %></td>
       </tr>
     <% end %>

@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131221004230) do
+ActiveRecord::Schema.define(version: 20131228080310) do
+
+  create_table "creators", force: true do |t|
+    t.string   "pseudonym"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "votes", force: true do |t|
     t.string   "voter_id"
@@ -25,10 +32,10 @@ ActiveRecord::Schema.define(version: 20131221004230) do
     t.text     "definition"
     t.string   "name"
     t.text     "example"
-    t.string   "pseudonym"
-    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
+    t.boolean  "active",     default: false
   end
 
 end
